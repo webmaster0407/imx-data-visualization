@@ -17,42 +17,70 @@ class ApplicationController extends Controller
 
     }
 
+
     /*
+        @name  : getApplications
         @usage : get all applications
         @params: 
-        @return: json
+            integer : page_size  :  Page size of the result
+            string : cursor : Cursor
+            string : order_by : Property to sort by
+            string : direction : Direction to sort(asc/desc)
+        @return: 
+            {
+              "result": [
+                {
+                  "id": "12f2d631-db48-8891-350c-c74647bb5b7f",
+                  "name": "Guilds Of Guardians",
+                  "created_at": "2021-07-02T02:54:02.592523Z"
+                },
+                {
+                  "id": "8a2d8baa-8bff-4061-bdd3-07a3cad3179a",
+                  "name": "Epics GG",
+                  "created_at": "2021-04-19T11:05:29.654452Z"
+                }
+              ],
+              "cursor": "eyJpZCI6IjhhMmQ4YmFhLThiZmYtNDA2MS1iZGQzLTA3YTNjYWQzMTc5YSIsImNyZWF0ZWRfYXQiOiIyMDIxLTA0LTE5VDExOjA1OjI5LjY1NDQ1MloifQ",
+              "remaining": 0
+            }
     */
-    public function getApplications() {
-
-        // if api key exist
-        // $response = Http::acceptJson()
-        // ->withHeaders([
-        //     'x-api-key'=> '0xa7aefead2f25972d80516628417ac46b3f2604af'
-        // ])->get(
-        //     'api.ropsten.x.immutable.com/v1/applications'
-        // );
+    public function getApplications(Request $request) {
+        $body = [];
+        if ($request->page_size !== null) {
+            $body['page_size'] = $request->page_size;
+        }
+        if ($request->cursor !== null) {
+            $body['cursor'] = $request->cursor;
+        }
+        if ($request->order_by !== null) {
+            $body['order_by'] = $request->order_by;
+        }
+        if ($request->direction !== null) {
+            $body['direction'] = $request->direction;
+        }
         $response = Http::acceptJson()
         ->get(
-            'https://api.ropsten.x.immutable.com/v1/applications'
+            'https://api.ropsten.x.immutable.com/v1/applications',
+            $body
         );
         echo $response->getBody();
     }
 
+
     /*
+        @name  : getApplicationDetail
         @usage : get detail of an application with the given id
         @params: 
             $id : application id 
-        @return: json
+        @return: 
+            {
+              "id": "12f2d631-db48-8891-350c-c74647bb5b7f",
+              "name": "Guilds Of Guardians",
+              "created_at": "2021-07-02T02:54:02.592523Z"
+            }
     */
     public function getApplicationDetail($id) {
 
-        // if api key exist
-        // $response = Http::acceptJson()
-        // ->withHeaders([
-        //     'x-api-key'=> '0xa7aefead2f25972d80516628417ac46b3f2604af'
-        // ])->get(
-        //     'https://api.ropsten.x.immutable.com/v1/applications/' . $id
-        // );
         
         $response = Http::acceptJson()
         ->get(
