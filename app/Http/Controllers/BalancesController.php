@@ -33,9 +33,9 @@ class BalancesController extends Controller
     */
     public function fetch_WEI_balances($owner) {
         $response = Http::acceptJson()
-        ->get(
-            'https://api.ropsten.x.immutable.com/v1/balances/' . $owner
-        );
+            ->get(
+                'https://api.ropsten.x.immutable.com/v1/balances/' . $owner
+            );
         echo $response->getBody();
     }
 
@@ -60,9 +60,9 @@ class BalancesController extends Controller
     */
     public function get_balances_list($owner) {
         $response = Http::acceptJson()
-        ->get(
-            'https://api.ropsten.x.immutable.com/v2/balances/' . $owner
-        );
+            ->get(
+                'https://api.ropsten.x.immutable.com/v2/balances/' . $owner
+            );
         echo $response->getBody();
     }
 
@@ -77,9 +77,9 @@ class BalancesController extends Controller
     */
     public function fetch_token_balances($owner, $address) {
         $response = Http::acceptJson()
-        ->get(
-            'https://api.ropsten.x.immutable.com/v2/balances/' . $owner . '/' . $address
-        );
+            ->get(
+                'https://api.ropsten.x.immutable.com/v2/balances/' . $owner . '/' . $address
+            );
         echo $response->getBody();
     }
 }

@@ -19,11 +19,12 @@ class CollectionsController extends Controller
         @name  : getCollections
         @usage : Get a list of collections
         @params: 
-            integer  page_size  :  Page size of the result
-            string  cursor : Cursor
-            string  order_by : Property to sort by
-            string  direction : Direction to sort(asc/desc)
-            string  blacklist : List of collections not to be displayed, separated by commas
+            body params:
+                integer  page_size  :  Page size of the result
+                string  cursor : Cursor
+                string  order_by : Property to sort by
+                string  direction : Direction to sort(asc/desc)
+                string  blacklist : List of collections not to be displayed, separated by commas
         @return: 
             {
               "result": [
@@ -74,13 +75,14 @@ class CollectionsController extends Controller
         @method: post
         @usage : get all applications
         @params: 
-            contract_address  required  :  Ethereum address of the ERC721 contract
-            name required : Name of the collection
-            owner_public_key required : Owner Public Key: The public key of the owner of the contract
-            collection_image_url : URL of the tile image for this collection
-            description : Description of the collection
-            icon_url : URL of the icon for this collection
-            metadata_api_url : URL of the metadata for this collection
+            body params: 
+                contract_address  required  :  Ethereum address of the ERC721 contract
+                name required : Name of the collection
+                owner_public_key required : Owner Public Key: The public key of the owner of the contract
+                collection_image_url : URL of the tile image for this collection
+                description : Description of the collection
+                icon_url : URL of the icon for this collection
+                metadata_api_url : URL of the metadata for this collection
         @return: 
             //
     */
@@ -117,7 +119,8 @@ class CollectionsController extends Controller
         @name  : getCollection
         @usage : Get details of a collection at the given address
         @params: 
-            $address : Collection contract address
+            path params: 
+                $address : Collection contract address
         @return: 
             {
               "address": "0xfc07fb6a7bd562fe6dd84d087256f883e59c6073",
@@ -142,11 +145,12 @@ class CollectionsController extends Controller
         @method: post
         @usage : Update collection
         @params: 
-            string  collection_image_url : URL of the tile image for this collection
-            string  description : Description of the collection
-            string  icon_url : URL of the icon for this collection
-            string  metadata_api_url : URL of the metadata for this collection
-            string  name : Name of the collection
+            body params:
+                string  collection_image_url : URL of the tile image for this collection
+                string  description : Description of the collection
+                string  icon_url : URL of the icon for this collection
+                string  metadata_api_url : URL of the metadata for this collection
+                string  name : Name of the collection
         @return: 
             //
     */
@@ -184,10 +188,11 @@ class CollectionsController extends Controller
         @name  : get_list_collection_filters
         @usage : Get a list of collection filters
         @params: 
-            $address required : Collection contract address
-
-            integer page_size  :  Page size of the result
-            string  next_page_token : Next page token
+            path params:
+                $address required : Collection contract address
+            body params:
+                integer page_size  :  Page size of the result
+                string  next_page_token : Next page token
         @return: 
             []
     */
@@ -231,12 +236,13 @@ class CollectionsController extends Controller
         @method: post
         @usage : Add metadata schema to collection
         @params: 
-            $address required : Collection contract address
-
-            object metadata required: 
-                boolean filterable : Sets the metadata as filterable
-                string name required : Name of the metadata key
-                string type : Type of the metadata. Values: "enum", "text", "boolean", "continuous", "discrete" | Default: "text". Src: https://docs.x.immutable.com/docs/asset-metadata#property-type-mapping
+            path parmas:
+                $address required : Collection contract address
+            body params: 
+                object metadata required: 
+                    boolean filterable : Sets the metadata as filterable
+                    string name required : Name of the metadata key
+                    string type : Type of the metadata. Values: "enum", "text", "boolean", "continuous", "discrete" | Default: "text". Src: https://docs.x.immutable.com/docs/asset-metadata#property-type-mapping
         @return: 
             //
     */
