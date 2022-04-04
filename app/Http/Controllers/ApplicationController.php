@@ -80,8 +80,7 @@ class ApplicationController extends Controller
             }
     */
     public function getApplicationDetail($id) {
-
-        
+ 
         $response = Http::acceptJson()
         ->get(
             'https://api.ropsten.x.immutable.com/v1/applications/' . $id
