@@ -78,7 +78,7 @@ Route::get('fetch_token_balances/{owner}/{address}', [BalancesController::class,
 | ClaimsController Routes
 |--------------------------------------------------------------------------
 */
-
+Route::get('get_TLV_info/{etherKey}/{tokenAddress}', [TlvsController::class, 'get_TLV_info']);
 
 
 /*
@@ -86,7 +86,7 @@ Route::get('fetch_token_balances/{owner}/{address}', [BalancesController::class,
 | CollectionsController Routes
 |--------------------------------------------------------------------------
 */
-
+Route::get('get_TLV_info/{etherKey}/{tokenAddress}', [TlvsController::class, 'get_TLV_info']);
 
 
 /*
@@ -94,6 +94,14 @@ Route::get('fetch_token_balances/{owner}/{address}', [BalancesController::class,
 | DepositsController Routes
 |--------------------------------------------------------------------------
 */
+Route::get('getCollections', [CollectionsController::class, 'getCollections']);
+Route::post('createCollection', [CollectionsController::class, 'createCollection']);
+Route::get('getCollection/{address}', [CollectionsController::class, 'getCollection']);
+Route::post('updateCollection/{address}', [CollectionsController::class, 'updateCollection']);
+Route::get('get_list_collection_filters/{address}/filters', [CollectionsController::class, 'get_list_collection_filters']);
+Route::get('get_collection_metadataSchema/{address}/metadata-schema', [CollectionsController::class, 'get_collection_metadataSchema']);
+Route::post('add_metadataSchema_to_collection/{address}/metadata-schema', [CollectionsController::class, 'add_metadataSchema_to_collection']);
+Route::post('update_metadataSchema_by_name/{address}/metadata-schema/{schemaName}', [CollectionsController::class, 'update_metadataSchema_by_name']);
 
 
 

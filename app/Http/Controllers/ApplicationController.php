@@ -59,10 +59,10 @@ class ApplicationController extends Controller
             $body['direction'] = $request->direction;
         }
         $response = Http::acceptJson()
-        ->get(
-            'https://api.ropsten.x.immutable.com/v1/applications',
-            $body
-        );
+            ->get(
+                'https://api.ropsten.x.immutable.com/v1/applications',
+                $body
+            );
         echo $response->getBody();
     }
 
@@ -82,9 +82,9 @@ class ApplicationController extends Controller
     public function getApplicationDetail($id) {
  
         $response = Http::acceptJson()
-        ->get(
-            'https://api.ropsten.x.immutable.com/v1/applications/' . $id
-        );
+            ->get(
+                'https://api.ropsten.x.immutable.com/v1/applications/' . $id
+            );
         echo $response->getBody();
     }
 }
