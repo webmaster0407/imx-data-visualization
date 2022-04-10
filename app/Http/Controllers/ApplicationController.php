@@ -58,9 +58,12 @@ class ApplicationController extends Controller
         if ($request->direction !== null) {
             $body['direction'] = $request->direction;
         }
+
+        $url = 'https://api.x.immutable.com/v1/applications';
+        
         $response = Http::acceptJson()
             ->get(
-                'https://api.ropsten.x.immutable.com/v1/applications',
+                $url,
                 $body
             );
         echo $response->getBody();

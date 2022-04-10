@@ -115,7 +115,7 @@ class AssetController extends Controller
         }
         $response = Http::acceptJson()
         ->get(
-            'https://api.ropsten.x.immutable.com/v1/assets',
+            'https://api.x.immutable.com/v1/assets',
             $body
         );
         echo $response->getBody();
@@ -154,11 +154,16 @@ class AssetController extends Controller
             $body['include_fees'] = $request->include_fees;
         }
         
+        // $response = Http::acceptJson()
+        //     ->get(
+        //         'https://api.ropsten.x.immutable.com/v1/assets/' . $token_address . '/' . $token_id,
+        //         $body
+        //     );
         $response = Http::acceptJson()
-        ->get(
-            'https://api.ropsten.x.immutable.com/v1/assets/' . $token_address . '/' . $token_id,
-            $body
-        );
+            ->get(
+                'https://api.x.immutable.com/v1/assets/' . $token_address . '/' . $token_id,
+                $body
+            );
         echo $response->getBody();
     }
 }

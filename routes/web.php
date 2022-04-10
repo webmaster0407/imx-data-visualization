@@ -21,6 +21,7 @@ use App\Http\Controllers\TradesController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WithdrawalsController;
+use App\Http\Controllers\TransactionController;
 // use App\Http\Controllers\TestController;
 // use App\Http\Controllers\TestController;
 // use App\Http\Controllers\TestController;
@@ -45,6 +46,15 @@ use App\Http\Controllers\WithdrawalsController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| TestController Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('test', [TestController::class, 'getTest']);
 
 
 /*
@@ -191,4 +201,12 @@ Route::get('get_TLV_info/{etherKey}/{tokenAddress}', [TlvsController::class, 'ge
 */
 
 
+/*
+|--------------------------------------------------------------------------
+| TransactionController Routes
+|--------------------------------------------------------------------------
+*/
 
+Route::get('listTransactionV2', [TransactionController::class, 'listTransactionV2']);
+Route::get('getTransactionDetail/{token_address}/{token_id}', [TransactionController::class, 'getTransactionDetail']);
+Route::get('getTxn/{txn_id}', [TransactionController::class, 'getTxn']);
