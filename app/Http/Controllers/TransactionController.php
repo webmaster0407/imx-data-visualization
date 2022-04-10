@@ -15,9 +15,12 @@ class TransactionController extends Controller
         
         $query = "query listTransactionsV2(\$address: String!, \$pageSize: Int, \$nextToken: String, \$txnType: String, \$maxTime: Float) {\n  listTransactionsV2(\n    address: \$address\n    limit: \$pageSize\n    nextToken: \$nextToken\n    txnType: \$txnType\n    maxTime: \$maxTime\n  ) {\n    items {\n      txn_time\n      txn_id\n      txn_type\n      transfers {\n        from_address\n        to_address\n        token {\n          type\n          quantity\n          usd_rate\n          token_address\n          token_id\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    nextToken\n    lastUpdated\n    txnType\n    maxTime\n    scannedCount\n    __typename\n  }\n}";
         
+        $veve_address = "0xa7aefead2f25972d80516628417ac46b3f2604af";
+        $pageSize = 1000;
+
         $variables = [
-            "address" => "0xa7aefead2f25972d80516628417ac46b3f2604af",
-            "pageSize" => 100
+            "address" => $veve_address,
+            "pageSize" => $pageSize
         ];
 
         $data = [
@@ -41,7 +44,7 @@ class TransactionController extends Controller
         echo "</pre>";
     }
 
-    public function getTransactionDetail(Request $request, $token_address, $token_id) {
+    public function getTokenDetail(Request $request, $token_address, $token_id) {
         $url = "https://api.x.immutable.com/v1/assets/" . $token_address . "/" . $token_id;
         $response = Http::acceptJson()
             ->get(

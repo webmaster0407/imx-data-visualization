@@ -208,5 +208,5 @@ Route::get('get_TLV_info/{etherKey}/{tokenAddress}', [TlvsController::class, 'ge
 */
 
 Route::get('listTransactionV2', [TransactionController::class, 'listTransactionV2']);
-Route::get('getTransactionDetail/{token_address}/{token_id}', [TransactionController::class, 'getTransactionDetail']);
+Route::get('getTokenDetail/{token_address}/{token_id}', [TransactionController::class, 'getTokenDetail']);
 Route::get('getTxn/{txn_id}', [TransactionController::class, 'getTxn']);
