@@ -125,7 +125,12 @@ Route::post('get_signable_deposit_details', [DepositsController::class, 'get_sig
 |--------------------------------------------------------------------------
 */
 
-
+Route::get('getMTDByIMXTokenId/{id}', [MintsController::class, 'getMintableTokenDetailByIMXTokenId']); 
+Route::get('getMTByTAddressAndTId/{token_address}/{token_id}', [MintsController::class, 'getMintableTokenByTokenAddressAndTokenId']);
+Route::get('getMintsList', [MintsController::class, 'getMintsList']); 
+Route::post('mintTokens', [MintsController::class, 'mintTokens']);
+Route::get('getMintDetailsById/{id}', [MintsController::class, 'getMintDetailsById']);
+Route::post('mintTokensV2', [MintsController::class, 'mintTokensV2']);
 
 /*
 |--------------------------------------------------------------------------

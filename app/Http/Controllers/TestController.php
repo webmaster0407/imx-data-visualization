@@ -29,6 +29,7 @@ operationName: "getMetrics"
 operationName: "getTransaction"
     query: "query getTransaction(\$txn_id: Int!) {\n  getTransaction(txn_id: \$txn_id) {\n    txn_time\n    txn_id\n    txn_type\n    transfers {\n      from_address\n      to_address\n      token {\n        internal_id\n        quantity\n        token_address\n        usd_rate\n        type\n        token_id\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
 
+
 operationName: "getTransaction"
     query: "query getTransaction(\$txn_id: Int!) {\n  getTransaction(txn_id: \$txn_id) {\n    txn_time\n    txn_id\n    txn_type\n    transfers {\n      from_address\n      to_address\n      token {\n        internal_id\n        quantity\n        token_address\n        usd_rate\n        type\n        token_id\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
 
