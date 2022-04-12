@@ -146,6 +146,7 @@ Route::post('mintTokensV2', [MintsController::class, 'mintTokensV2']);
 |--------------------------------------------------------------------------
 */
 
+// Route::get('mintTokensV2', [OrdersController::class, 'mintTokensV2']);
 
 /*
 |--------------------------------------------------------------------------

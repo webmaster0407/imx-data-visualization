@@ -18,7 +18,19 @@ class MintsController extends Controller
 
     }
 
-
+    /*
+        @name  : getMintableTokenDetailByIMXTokenId
+        @usage : Get details of a mintable token with the given IMX token ID
+        @params: 
+            path params: 
+                string $id required
+            body params:
+        @return: 
+            {
+                "code":"resource_not_found_code",
+                "message":"Mintable Token id '68615979' not found"
+            }
+    */
     public function getMintableTokenDetailByIMXTokenId($id) {
         $response = Http::acceptJson()
             ->get(
@@ -27,6 +39,21 @@ class MintsController extends Controller
         echo $response->getBody();
     }
 
+    /*
+        @name : getMintableTokenByTokenAddressAndTokenId
+        @usage : Get details of a mintable token with the given token address and token ID
+        @params: 
+            path params: 
+                string $token_address required
+                string $token_id  required
+            body params:
+        @return: 
+            {
+                "token_id":"0x1d82b32d0cdaee7b06c69a22e3f98b171e5d2a53b4faf70a0c2c58adab91763d",
+                "client_token_id":"5879500",
+                "blueprint":"Inhumans,26541"
+            }
+    */
     public function getMintableTokenByTokenAddressAndTokenId($token_address, $token_id) {
         $response = Http::acceptJson()
             ->get(
@@ -35,6 +62,32 @@ class MintsController extends Controller
         echo $response->getBody();
     }
 
+    /*
+        @name : getMintsList
+        @usage : Get a list of mints
+        @params: 
+            path params: 
+                
+            body params:
+                integer page_size : Page size of the result
+                string cursor : Cursor
+                string order_by : Property to sort by
+                string direction : Direction to sort (asc/desc)
+                string user     : Ethereum address of the user who owns these assets
+                string status   : Status of these assets
+                string min_timestamp : Minimum timestamp for this mint
+                string max_timestamp : Maximum timestamp for this mint
+                string token_type : Token type of the minted asset
+                string token_id  : ERC721 Token ID of the minted asset
+                string asset_id: Internal IMX ID of the minted asset
+                string token_name : Token Name of the minted asset
+                string token_address : Token address of the minted asset
+                string min_quantity : Min quantity for the minted asset
+                string max_quantity : Max quantity for the minted asset
+                string metadata : JSON-encoded metadata filters for the minted asset
+        @return: 
+        //
+    */
     public function getMintsList(Request $request) {
         $body = [];
         if ($request->page_size !== null) {
@@ -96,6 +149,19 @@ class MintsController extends Controller
         echo "</pre>";
     } 
 
+
+    /*
+        @name : mintTokens
+        @method: post
+        @usage : Mint tokens in a batch
+        @params: 
+            path params: 
+               
+            body params:
+                object mints required
+        @return: 
+            //
+    */
     public function mintTokens(Request $request) {
         $body = [];
         $mints = $request->mints;
@@ -108,6 +174,17 @@ class MintsController extends Controller
         echo $response->getBody();    }
 
 
+    /*
+        @name : getMintDetailsById
+        @usage : Get details of a mint with the given ID
+        @params: 
+            path params:
+                string $id  required
+            body params:
+                
+        @return: 
+            //
+    */
     public function getMintDetailsById($id) {
         $response = Http::acceptJson()
             ->get(
@@ -116,6 +193,18 @@ class MintsController extends Controller
         echo $response->getBody();
     }
 
+
+    /*
+        @name : mintTokensV2
+        @method: post
+        @usage : Mint tokens in a batch with fees
+        @params: 
+            path params: 
+            body params:
+                object 
+        @return: 
+            //
+    */
     public function mintTokensV2(Request $request) {
         $body = [];
         $royalties = $request->royalties;
