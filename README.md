@@ -17,7 +17,7 @@ Progress
         1) implement apis to get data from veve website (scraping or use api)
         2) implement models to manage api data 
         3) visualization
-    // scrapping with python
+  3. fetch data from API that is being used in immutascan.io
     
     scrap data from immutascan
     veve api
