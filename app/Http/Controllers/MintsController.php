@@ -171,7 +171,8 @@ class MintsController extends Controller
                 $this->base_url . '/mints',
                 $body
             );
-        echo $response->getBody();    }
+        echo $response->getBody();    
+    }
 
 
     /*

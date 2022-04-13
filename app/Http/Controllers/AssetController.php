@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Http;
 
 class AssetController extends Controller
 {
+
+    private $base_url = "https://api.x.immutable.com/v1";
     /*
         @name  : index
         @usage : display Applications
@@ -115,10 +117,12 @@ class AssetController extends Controller
         }
         $response = Http::acceptJson()
         ->get(
-            'https://api.x.immutable.com/v1/assets',
+            $this->base_url . '/assets',
             $body
         );
-        echo $response->getBody();
+        echo "<pre>";
+        print_r(json_decode($response->getBody(), true));
+        echo "</pre>";
     }
 
     /*
@@ -161,9 +165,12 @@ class AssetController extends Controller
         //     );
         $response = Http::acceptJson()
             ->get(
-                'https://api.x.immutable.com/v1/assets/' . $token_address . '/' . $token_id,
+                $this->base_url . '/assets/' . $token_address . '/' . $token_id,
                 $body
             );
-        echo $response->getBody();
+
+        echo "<pre>";
+        print_r(json_decode($response->getBody(), true));
+        echo "</pre>";
     }
 }

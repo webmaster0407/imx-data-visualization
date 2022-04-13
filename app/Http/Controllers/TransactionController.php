@@ -204,8 +204,7 @@ class TransactionController extends Controller
             "operationName" => $operationName,
             "query" => $query,
             "variables" => $variables
-        ];
-
+        ];     
         $response = Http::acceptJson()
             ->withHeaders([
                 'x-api-key'=> 'da2-ihd6lsinwbdb3e6c6ocfkab2nm'
@@ -221,3 +220,4 @@ class TransactionController extends Controller
         echo "</pre>";
     }
 }
+

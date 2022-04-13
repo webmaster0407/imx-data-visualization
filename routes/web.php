@@ -125,12 +125,8 @@ Route::post('get_signable_deposit_details', [DepositsController::class, 'get_sig
 |--------------------------------------------------------------------------
 */
 
-Route::get('getMTDByIMXTokenId/{id}', [MintsController::class, 'getMintableTokenDetailByIMXTokenId']); 
-Route::get('getMTByTAddressAndTId/{token_address}/{token_id}', [MintsController::class, 'getMintableTokenByTokenAddressAndTokenId']);
-Route::get('getMintsList', [MintsController::class, 'getMintsList']); 
-Route::post('mintTokens', [MintsController::class, 'mintTokens']);
-Route::get('getMintDetailsById/{id}', [MintsController::class, 'getMintDetailsById']);
-Route::post('mintTokensV2', [MintsController::class, 'mintTokensV2']);
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -138,6 +134,12 @@ Route::post('mintTokensV2', [MintsController::class, 'mintTokensV2']);
 |--------------------------------------------------------------------------
 */
 
+Route::get('getMTDByIMXTokenId/{id}', [MintsController::class, 'getMintableTokenDetailByIMXTokenId']); 
+Route::get('getMTByTAddressAndTId/{token_address}/{token_id}', [MintsController::class, 'getMintableTokenByTokenAddressAndTokenId']);
+Route::get('getMintsList', [MintsController::class, 'getMintsList']); 
+Route::post('mintTokens', [MintsController::class, 'mintTokens']);
+Route::get('getMintDetailsById/{id}', [MintsController::class, 'getMintDetailsById']);
+Route::post('mintTokensV2', [MintsController::class, 'mintTokensV2']);
 
 
 /*
@@ -174,8 +176,8 @@ Route::get('get_TLV_info/{etherKey}/{tokenAddress}', [TlvsController::class, 'ge
 | TokensController Routes
 |--------------------------------------------------------------------------
 */
-
-
+Route::get('getTokens', [TokensController::class, 'getTokens']);
+Route::get('getTokenDetail/{token_address}/{token_id}', [TokensController::class, 'getTokenDetail']);
 /*
 |--------------------------------------------------------------------------
 | TradesController Routes
