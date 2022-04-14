@@ -29,7 +29,7 @@ class TlvsController extends Controller
               "message": "Feature not yet implemented: /v1/claims/{etherKey}/{tokenAddress}"
             }
     */
-    public function get_TLV_info($etherKey, $tokenAddress) {
+    public function _get_TLV_info($etherKey, $tokenAddress) {
         $response = Http::acceptJson()
         ->get(
             'https://api.ropsten.x.immutable.com/v1/claims/' . $etherKey . '/' . $tokenAddress

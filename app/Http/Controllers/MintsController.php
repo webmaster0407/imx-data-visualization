@@ -31,7 +31,7 @@ class MintsController extends Controller
                 "message":"Mintable Token id '68615979' not found"
             }
     */
-    public function getMintableTokenDetailByIMXTokenId($id) {
+    public function _getMintableTokenDetailByIMXTokenId($id) {
         $response = Http::acceptJson()
             ->get(
                 $this->base_url . '/mintable-token/' . $id
@@ -54,7 +54,7 @@ class MintsController extends Controller
                 "blueprint":"Inhumans,26541"
             }
     */
-    public function getMintableTokenByTokenAddressAndTokenId($token_address, $token_id) {
+    public function _getMintableTokenByTokenAddressAndTokenId($token_address, $token_id) {
         $response = Http::acceptJson()
             ->get(
                 $this->base_url . '/mintable-token/' . $token_address . '/' . $token_id
@@ -88,7 +88,7 @@ class MintsController extends Controller
         @return: 
         //
     */
-    public function getMintsList(Request $request) {
+    public function _getMintsList(Request $request) {
         $body = [];
         if ($request->page_size !== null) {
             $body['page_size'] = $request->page_size;
@@ -162,7 +162,7 @@ class MintsController extends Controller
         @return: 
             //
     */
-    public function mintTokens(Request $request) {
+    public function _mintTokens(Request $request) {
         $body = [];
         $mints = $request->mints;
         $body['mints'] = $mints;
@@ -186,7 +186,7 @@ class MintsController extends Controller
         @return: 
             //
     */
-    public function getMintDetailsById($id) {
+    public function _getMintDetailsById($id) {
         $response = Http::acceptJson()
             ->get(
                 $this->base_url . '/mints/' . $id
@@ -206,7 +206,7 @@ class MintsController extends Controller
         @return: 
             //
     */
-    public function mintTokensV2(Request $request) {
+    public function _mintTokensV2(Request $request) {
         $body = [];
         $royalties = $request->royalties;
 

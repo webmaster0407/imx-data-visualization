@@ -44,7 +44,7 @@ class ApplicationController extends Controller
               "remaining": 0
             }
     */
-    public function getApplications(Request $request) {
+    public function _getApplications(Request $request) {
         $body = [];
         if ($request->page_size !== null) {
             $body['page_size'] = $request->page_size;
@@ -82,7 +82,7 @@ class ApplicationController extends Controller
               "created_at": "2021-07-02T02:54:02.592523Z"
             }
     */
-    public function getApplicationDetail($id) {
+    public function _getApplicationDetail($id) {
  
         $response = Http::acceptJson()
             ->get(

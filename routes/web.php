@@ -54,7 +54,7 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::get('test', [TestController::class, 'getTest']);
+Route::get('_test', [TestController::class, '_getTest']);
 
 
 /*
@@ -62,16 +62,16 @@ Route::get('test', [TestController::class, 'getTest']);
 | ApplicationController Routes
 |--------------------------------------------------------------------------
 */
-Route::get('applications', [ApplicationController::class, 'getApplications']);
-Route::get('applications/{id}', [ApplicationController::class, 'getApplicationDetail']);
+Route::get('_applications', [ApplicationController::class, '_getApplications']);
+Route::get('_applications/{id}', [ApplicationController::class, '_getApplicationDetail']);
 
 /*
 |--------------------------------------------------------------------------
 | AssetController Routes
 |--------------------------------------------------------------------------
 */
-Route::get('assets', [AssetController::class, 'getAssets']);
-Route::get('assets/{token_address}/{token_id}', [AssetController::class, 'getAssetDetail']);
+Route::get('_assets', [AssetController::class, '_getAssets']);
+Route::get('_assets/{token_address}/{token_id}', [AssetController::class, '_getAssetDetail']);
 
 
 /*
@@ -79,9 +79,9 @@ Route::get('assets/{token_address}/{token_id}', [AssetController::class, 'getAss
 | BalancesController Routes
 |--------------------------------------------------------------------------
 */
-Route::get('fetch_WEI_balances/{owner}', [BalancesController::class, 'fetch_WEI_balances']);
-Route::get('get_balances_list/{owner}', [BalancesController::class, 'get_balances_list']);
-Route::get('fetch_token_balances/{owner}/{address}', [BalancesController::class, 'fetch_token_balances']);
+Route::get('_fetch_WEI_balances/{owner}', [BalancesController::class, '_fetch_WEI_balances']);
+Route::get('_get_balances_list/{owner}', [BalancesController::class, '_get_balances_list']);
+Route::get('_fetch_token_balances/{owner}/{address}', [BalancesController::class, '_fetch_token_balances']);
 
 /*
 |--------------------------------------------------------------------------
@@ -96,14 +96,14 @@ Route::get('fetch_token_balances/{owner}/{address}', [BalancesController::class,
 | CollectionsController Routes
 |--------------------------------------------------------------------------
 */
-Route::get('getCollections', [CollectionsController::class, 'getCollections']);
-Route::post('createCollection', [CollectionsController::class, 'createCollection']);
-Route::get('getCollection/{address}', [CollectionsController::class, 'getCollection']);
-Route::post('updateCollection/{address}', [CollectionsController::class, 'updateCollection']);
-Route::get('get_list_collection_filters/{address}/filters', [CollectionsController::class, 'get_list_collection_filters']);
-Route::get('get_collection_metadataSchema/{address}/metadata-schema', [CollectionsController::class, 'get_collection_metadataSchema']);
-Route::post('add_metadataSchema_to_collection/{address}/metadata-schema', [CollectionsController::class, 'add_metadataSchema_to_collection']);
-Route::post('update_metadataSchema_by_name/{address}/metadata-schema/{schemaName}', [CollectionsController::class, 'update_metadataSchema_by_name']);
+Route::get('_getCollections', [CollectionsController::class, '_getCollections']);
+Route::post('_createCollection', [CollectionsController::class, '_createCollection']);
+Route::get('_getCollection/{address}', [CollectionsController::class, '_getCollection']);
+Route::post('_updateCollection/{address}', [CollectionsController::class, '_updateCollection']);
+Route::get('_get_list_collection_filters/{address}/filters', [CollectionsController::class, '_get_list_collection_filters']);
+Route::get('_get_collection_metadataSchema/{address}/metadata-schema', [CollectionsController::class, '_get_collection_metadataSchema']);
+Route::post('_add_metadataSchema_to_collection/{address}/metadata-schema', [CollectionsController::class, '_add_metadataSchema_to_collection']);
+Route::post('_update_metadataSchema_by_name/{address}/metadata-schema/{schemaName}', [CollectionsController::class, '_update_metadataSchema_by_name']);
 
 
 
@@ -112,9 +112,9 @@ Route::post('update_metadataSchema_by_name/{address}/metadata-schema/{schemaName
 | DepositsController Routes
 |--------------------------------------------------------------------------
 */
-Route::get('getDeposits', [DepositsController::class, 'getDeposits']);
-Route::get('getDeposit/{id}', [DepositsController::class, 'getDeposit']);
-Route::post('get_signable_deposit_details', [DepositsController::class, 'get_signable_deposit_details']);
+Route::get('_getDeposits', [DepositsController::class, '_getDeposits']);
+Route::get('_getDeposit/{id}', [DepositsController::class, '_getDeposit']);
+Route::post('_get_signable_deposit_details', [DepositsController::class, '_get_signable_deposit_details']);
 
 
 
@@ -134,12 +134,12 @@ Route::post('get_signable_deposit_details', [DepositsController::class, 'get_sig
 |--------------------------------------------------------------------------
 */
 
-Route::get('getMTDByIMXTokenId/{id}', [MintsController::class, 'getMintableTokenDetailByIMXTokenId']); 
-Route::get('getMTByTAddressAndTId/{token_address}/{token_id}', [MintsController::class, 'getMintableTokenByTokenAddressAndTokenId']);
-Route::get('getMintsList', [MintsController::class, 'getMintsList']); 
-Route::post('mintTokens', [MintsController::class, 'mintTokens']);
-Route::get('getMintDetailsById/{id}', [MintsController::class, 'getMintDetailsById']);
-Route::post('mintTokensV2', [MintsController::class, 'mintTokensV2']);
+Route::get('_getMTDByIMXTokenId/{id}', [MintsController::class, '_getMintableTokenDetailByIMXTokenId']); 
+Route::get('_getMTByTAddressAndTId/{token_address}/{token_id}', [MintsController::class, '_getMintableTokenByTokenAddressAndTokenId']);
+Route::get('_getMintsList', [MintsController::class, '_getMintsList']); 
+Route::post('_mintTokens', [MintsController::class, '_mintTokens']);
+Route::get('_getMintDetailsById/{id}', [MintsController::class, '_getMintDetailsById']);
+Route::post('_mintTokensV2', [MintsController::class, '_mintTokensV2']);
 
 
 /*
@@ -169,15 +169,19 @@ Route::post('mintTokensV2', [MintsController::class, 'mintTokensV2']);
 | TlvsController Routes
 |--------------------------------------------------------------------------
 */
-Route::get('get_TLV_info/{etherKey}/{tokenAddress}', [TlvsController::class, 'get_TLV_info']);
+Route::get('_get_TLV_info/{etherKey}/{tokenAddress}', [TlvsController::class, '_get_TLV_info']);
 
 /*
 |--------------------------------------------------------------------------
 | TokensController Routes
 |--------------------------------------------------------------------------
 */
-Route::get('getTokens', [TokensController::class, 'getTokens']);
-Route::get('getTokenDetail/{token_address}/{token_id}', [TokensController::class, 'getTokenDetail']);
+Route::get('_getTokens', [TokensController::class, '_getTokens']);
+Route::get('_getTokenDetail/{token_address}/{token_id}', [TokensController::class, '_getTokenDetail']);
+
+
+Route::get('storeToken', [TokensController::class, 'storeToken']);
+
 /*
 |--------------------------------------------------------------------------
 | TradesController Routes
@@ -215,6 +219,7 @@ Route::get('getTokenDetail/{token_address}/{token_id}', [TokensController::class
 |--------------------------------------------------------------------------
 */
 
-Route::get('listTransactionV2', [TransactionController::class, 'listTransactionV2']);
-Route::get('getTokenDetail/{token_address}/{token_id}', [TransactionController::class, 'getTokenDetail']);
-Route::get('getTxn/{txn_id}', [TransactionController::class, 'getTxn']);
+Route::get('_listTransactionV2', [TransactionController::class, '_listTransactionV2']);
+// Route::get('getTokenDetail/{token_address}/{token_id}', [TransactionController::class, 'getTokenDetail']);
+Route::get('_getTxn/{txn_id}', [TransactionController::class, '_getTxn']);
+

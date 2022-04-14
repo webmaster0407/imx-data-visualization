@@ -77,7 +77,7 @@ class TransactionController extends Controller
                     )
             )
     */
-    public function listTransactionV2(Request $request) {
+    public function _listTransactionV2(Request $request) {
 
         $url = 'https://3vkyshzozjep5ciwsh2fvgdxwy.appsync-api.us-west-2.amazonaws.com/graphql';
 
@@ -143,7 +143,7 @@ class TransactionController extends Controller
                 [updated_at] => 2022-04-12T02:48:30.774804Z
             )
     */
-    public function getTokenDetail(Request $request, $token_address, $token_id) {
+    public function _getTokenDetail(Request $request, $token_address, $token_id) {
         $url = "https://api.x.immutable.com/v1/assets/" . $token_address . "/" . $token_id;
         $response = Http::acceptJson()
             ->get(
@@ -192,7 +192,7 @@ class TransactionController extends Controller
                     )
             )
     */
-    public function getTxn(Request $request, $txn_id) {
+    public function _getTxn(Request $request, $txn_id) {
         $url = "https://3vkyshzozjep5ciwsh2fvgdxwy.appsync-api.us-west-2.amazonaws.com/graphql";
         $operationName = "getTransaction";
         $query = "query getTransaction(\$txn_id: Int!) {\n  getTransaction(txn_id: \$txn_id) {\n    txn_time\n    txn_id\n    txn_type\n    transfers {\n      from_address\n      to_address\n      token {\n        internal_id\n        quantity\n        token_address\n        usd_rate\n        type\n        token_id\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}";

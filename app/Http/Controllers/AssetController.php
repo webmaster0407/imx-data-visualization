@@ -65,7 +65,7 @@ class AssetController extends Controller
               "remaining": 1
             }
     */
-    public function getAssets(Request $request) {
+    public function _getAssets(Request $request) {
         $body = [];
         if ($request->page_size !== null) {
             $body['page_size'] = $request->page_size;
@@ -152,7 +152,7 @@ class AssetController extends Controller
               "updated_at": "2022-03-16T11:03:02.236044Z"
             }
     */
-    public function getAssetDetail(Request $request, $token_address, $token_id) {
+    public function _getAssetDetail(Request $request, $token_address, $token_id) {
         $body = [];
         if ($request->include_fees !== null) {
             $body['include_fees'] = $request->include_fees;

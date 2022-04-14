@@ -43,7 +43,7 @@ class CollectionsController extends Controller
               "remaining": 1
             }
     */
-    public function getCollections(Request $request) {
+    public function _getCollections(Request $request) {
         $body = [];
         if ($request->page_size !== null) {
             $body['page_size'] = $request->page_size;
@@ -86,7 +86,7 @@ class CollectionsController extends Controller
         @return: 
             //
     */
-    public function createCollection(Request $request) {
+    public function _createCollection(Request $request) {
         $body = [];
         $body['contract_address'] = $request->contract_address;
         $body['name'] = $request->name;
@@ -132,7 +132,7 @@ class CollectionsController extends Controller
               "metadata_api_url": "https://staging.api.immutable.mantial.io/assets/imx/0xfc07fb6a7bd562fe6dd84d087256f883e59c6073"
             }
     */
-    public function getCollection($address) {
+    public function _getCollection($address) {
         $response = Http::acceptJson()
         ->get(
             'https://api.ropsten.x.immutable.com/v1/collections/' . $address
@@ -154,7 +154,7 @@ class CollectionsController extends Controller
         @return: 
             //
     */
-    public function updateCollection(Request $request, $address) {
+    public function _updateCollection(Request $request, $address) {
         $body = [];
         if ($request->collection_image_url !== null) {
             $body['collection_image_url'] = $request->collection_image_url;
@@ -196,7 +196,7 @@ class CollectionsController extends Controller
         @return: 
             []
     */
-    public function get_list_collection_filters(Request $request, $address) {
+    public function _get_list_collection_filters(Request $request, $address) {
         $body = [];
         if ($request->page_size !== null) {
             $body['page_size'] = $request->page_size;
@@ -222,7 +222,7 @@ class CollectionsController extends Controller
         @return: 
             []
     */
-    public function get_collection_metadataSchema($address) {
+    public function _get_collection_metadataSchema($address) {
 
         $response = Http::acceptJson()
             ->get(
@@ -246,7 +246,7 @@ class CollectionsController extends Controller
         @return: 
             //
     */
-    public function add_metadataSchema_to_collection(Request $request, $address) {
+    public function _add_metadataSchema_to_collection(Request $request, $address) {
         
         $metadata = $request->metadata;
         // if ($request->filterable !== null) {
@@ -284,7 +284,7 @@ class CollectionsController extends Controller
         @return: 
             //
     */
-    public function update_metadataSchema_by_name(Request $request, $address, $schemaName)
+    public function _update_metadataSchema_by_name(Request $request, $address, $schemaName)
     {
         $body = [];
         $metadata = [];

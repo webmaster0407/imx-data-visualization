@@ -62,7 +62,7 @@ class DepositsController extends Controller
               "remaining": 1
             }
     */
-    public function getDeposits(Request $request) {
+    public function _getDeposits(Request $request) {
         $body = [];
         if ($request->page_size !== null) {
             $body['page_size'] = $request->page_size;
@@ -145,7 +145,7 @@ class DepositsController extends Controller
               "timestamp": "2022-04-04T13:52:19.926261Z"
             }
     */
-    public function getDeposit($id) {
+    public function _getDeposit($id) {
         $response = Http::acceptJson()
             ->get(
                 'https://api.ropsten.x.immutable.com/v1/deposits/' . $id
@@ -167,7 +167,7 @@ class DepositsController extends Controller
         @return: 
             //
     */
-    public function get_signable_deposit_details(Request $request) {
+    public function _get_signable_deposit_details(Request $request) {
         $body = [];
         $body['amount'] = $request->amount;
         $body['token'] = $request->token;
