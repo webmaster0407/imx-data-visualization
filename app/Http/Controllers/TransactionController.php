@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Http;
 class TransactionController extends Controller
 {
 
+    public function __construct() {
+        ini_set('max_execution_time', 10000000);
+    }
+
     /*
         @name  : listTransactionV2
         @usage : list transactions
@@ -192,7 +196,7 @@ class TransactionController extends Controller
                     )
             )
     */
-    public function _getTxn(Request $request, $txn_id) {
+    public function _getTxn($txn_id) {
         $url = "https://3vkyshzozjep5ciwsh2fvgdxwy.appsync-api.us-west-2.amazonaws.com/graphql";
         $operationName = "getTransaction";
         $query = "query getTransaction(\$txn_id: Int!) {\n  getTransaction(txn_id: \$txn_id) {\n    txn_time\n    txn_id\n    txn_type\n    transfers {\n      from_address\n      to_address\n      token {\n        internal_id\n        quantity\n        token_address\n        usd_rate\n        type\n        token_id\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}";
@@ -214,10 +218,133 @@ class TransactionController extends Controller
             );
 
         $response_array = json_decode($response, true);
+        return $response_array;
+    }
+
+    public function getVEVEMintTrasactions() {
+        $url = 'https://3vkyshzozjep5ciwsh2fvgdxwy.appsync-api.us-west-2.amazonaws.com/graphql';
+
+        $operation_name = "listTransactionsV2";
+        
+        $query = "query listTransactionsV2(\$address: String!, \$pageSize: Int, \$nextToken: String, \$txnType: String, \$maxTime: Float) {\n  listTransactionsV2(\n    address: \$address\n    limit: \$pageSize\n    nextToken: \$nextToken\n    txnType: \$txnType\n    maxTime: \$maxTime\n  ) {\n    items {\n      txn_time\n      txn_id\n      txn_type\n      transfers {\n        from_address\n        to_address\n        token {\n          type\n          quantity\n          usd_rate\n          token_address\n          token_id\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    nextToken\n    lastUpdated\n    txnType\n    maxTime\n    scannedCount\n    __typename\n  }\n}";
+        
+        $veve_address = "0xa7aefead2f25972d80516628417ac46b3f2604af";
+        $pageSize = 50000;
+
+        $variables = [
+            "address" => $veve_address,
+            "pageSize" => $pageSize,
+            "txnType" => "mint"
+        ];
+
+        $data = [
+            "operationName" => $operation_name,
+            "query" => $query,
+            "variables" => $variables
+        ];
+
+        $response = Http::acceptJson()
+            ->withHeaders([
+                'x-api-key'=> 'da2-ihd6lsinwbdb3e6c6ocfkab2nm'
+            ])->post(
+                $url,
+                $data
+            );
+
+        $response_array = json_decode($response->getBody(), true);
 
         echo "<pre>";
         print_r($response_array);
         echo "</pre>";
     }
+
+    public function storeTodayMintsToCSV() {
+
+        $fileName = public_path() . '\storage\mint_xx1_yesterday_05.csv';
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+
+        $columns = array('txn_time', 'txn_id', 'txn_type', 'from_address', 'to_address', 'internal_id', 'quantity', 'token_address', 'usd_rate', 'type', 'token_id');
+        $file = fopen($fileName, 'w');
+
+        fputcsv($file, $columns);
+
+        $txn_id = 71277810;
+        // $txn_id = 71598689; 71598171   // break 71598481   71598171
+        // 71400543  //
+        $cnt = 0;
+
+        for(; ; $txn_id--) {
+            $token = $this->_getTxn($txn_id);
+            $token = $token['data']['getTransaction'];
+
+            if (isset($token['txn_type']) 
+                && ($token['txn_type'] == 'mint') 
+                && isset($token['transfers'])
+                && isset($token['transfers'][0])
+                && isset($token['transfers'][0]['token'])
+                && isset($token['transfers'][0]['token']['token_address'])
+                && ($token['transfers'][0]['token']['token_address'] == '0xa7aefead2f25972d80516628417ac46b3f2604af')
+            ) {
+                $txn_time = null;
+                if (isset($token['txn_time'])) $txn_time = $token['txn_time'];
+                $txn_id = null;
+                if (isset($token['txn_id'])) $txn_id = $token['txn_id'];
+                $txn_type = null;
+                if (isset($token['txn_type'])) $txn_type = $token['txn_type'];
+                $from_address = null;
+                if (isset($token['transfers']) && isset($token['transfers'][0]) && isset($token['transfers'][0]['from_address'])) $from_address = $token['transfers'][0]['from_address'];
+                $to_address = null;
+                if (isset($token['transfers']) && isset($token['transfers'][0]) && isset($token['transfers'][0]['to_address'])) $to_address = $token['transfers'][0]['to_address'];
+                $internal_id = null;
+                if (isset($token['transfers']) && isset($token['transfers'][0]) && isset($token['transfers'][0]['token']) && isset($token['transfers'][0]['token']['internal_id'])) $internal_id = $token['transfers'][0]['token']['internal_id'];
+
+                $quantity = null;
+                if (isset($token['transfers']) && isset($token['transfers'][0]) && isset($token['transfers'][0]['token']) && isset($token['transfers'][0]['token']['quantity'])) $quantity = $token['transfers'][0]['token']['quantity'];
+
+                $token_address = null;
+                if (isset($token['transfers']) && isset($token['transfers'][0]) && isset($token['transfers'][0]['token']) && isset($token['transfers'][0]['token']['token_address'])) $token_address = $token['transfers'][0]['token']['token_address'];
+
+                $usd_rate = null;
+                if (isset($token['transfers']) && isset($token['transfers'][0]) && isset($token['transfers'][0]['token']) && isset($token['transfers'][0]['token']['usd_rate'])) $usd_rate = $token['transfers'][0]['token']['usd_rate'];
+
+                $type = null;
+                if (isset($token['transfers']) && isset($token['transfers'][0]) && isset($token['transfers'][0]['token']) && isset($token['transfers'][0]['token']['type'])) $type = $token['transfers'][0]['token']['type'];
+
+                $token_id = null;
+                if (isset($token['transfers']) && isset($token['transfers'][0]) && isset($token['transfers'][0]['token']) && isset($token['transfers'][0]['token']['token_id'])) $token_id = $token['transfers'][0]['token']['token_id'];
+
+                $row = array(
+                    date('Y/m/d H:i:s', intval($txn_time) / 1000),
+                    $txn_id,
+                    $txn_type,
+                    $from_address,
+                    $to_address,
+                    $internal_id,
+                    $quantity,
+                    $token_address,
+                    $usd_rate,
+                    $type,
+                    $token_id
+                );
+
+                fputcsv($file, $row);
+
+                echo $txn_id . '<br />';
+                $cnt++;
+                if ($cnt == 29500) break;
+            }
+        }
+
+
+    }
+
+
+
 }
 

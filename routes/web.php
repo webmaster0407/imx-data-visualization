@@ -181,7 +181,7 @@ Route::get('_getTokenDetail/{token_address}/{token_id}', [TokensController::clas
 
 
 Route::get('storeToken', [TokensController::class, 'storeToken']);
-
+Route::get('storeAsCSV', [TokensController::class, 'storeAsCSV']);
 /*
 |--------------------------------------------------------------------------
 | TradesController Routes
@@ -220,6 +220,10 @@ Route::get('storeToken', [TokensController::class, 'storeToken']);
 */
 
 Route::get('_listTransactionV2', [TransactionController::class, '_listTransactionV2']);
+Route::get('getVEVEMintTrasactions', [TransactionController::class, 'getVEVEMintTrasactions']);
 // Route::get('getTokenDetail/{token_address}/{token_id}', [TransactionController::class, 'getTokenDetail']);
 Route::get('_getTxn/{txn_id}', [TransactionController::class, '_getTxn']);
+Route::get('storeTodayMintsToCSV', [TransactionController::class, 'storeTodayMintsToCSV']);
+
+
 

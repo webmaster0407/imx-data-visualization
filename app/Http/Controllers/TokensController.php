@@ -12,7 +12,7 @@ class TokensController extends Controller
 {
 
     public function __construct() {
-        ini_set('max_execution_time', 300);
+        ini_set('max_execution_time', 10000000);
     }
     
     private $base_url = "https://api.x.immutable.com/v1";
@@ -84,7 +84,6 @@ class TokensController extends Controller
         return $response_array;
     }
 
-
     // /** old API using
     // /*
     //     @name : getTokens
@@ -146,7 +145,7 @@ class TokensController extends Controller
     
     public function storeToken() {
         // get real last token id from fetching API
-        $real_last_token_id =  1000;
+        $real_last_token_id =  200000;
         // get last token id in db
         $db_last_token_id = $this->getLastTokenId();
 
@@ -162,23 +161,72 @@ class TokensController extends Controller
             echo "</pre>";
 
             $tokenModel = new Token;
-            $tokenModel->token_address = ($token['token_address'] !== null) ? $token['token_address'] : null;
-            $tokenModel->real_id = ($token['id'] !== null) ? $token['id'] : null;
-            $tokenModel->user = ($token['user'] !== null) ? $token['user'] : null;
-            $tokenModel->status = ($token['status'] !== null) ? $token['status'] : null;
-            $tokenModel->uri = ($token['uri'] !== null) ? $token['uri'] : null;
-            $tokenModel->name = ($token['name'] !== null) ? $token['name'] : null;
-            $tokenModel->description = ($token['description'] !== null) ? $token['description'] : null;
-            $tokenModel->image_url = ($token['image_url'] !== null) ? $token['image_url'] : null;
-            $tokenModel->metadata = $token['metadata'] ;
+            $tokenModel->token_address = isset($token['token_address']) ? $token['token_address'] : null;
+            $tokenModel->real_id = isset($token['id']) ? $token['id'] : null;
+            $tokenModel->user = isset($token['user']) ? $token['user'] : null;
+            $tokenModel->status = isset($token['status']) ? $token['status'] : null;
+            $tokenModel->uri = isset($token['uri']) ? $token['uri'] : null;
+            $tokenModel->name = isset($token['name']) ? $token['name'] : null;
+            $tokenModel->description = isset($token['description']) ? $token['description'] : null;
+            $tokenModel->image_url = isset($token['image_url']) ? $token['image_url'] : null;
+            $tokenModel->metadata = isset($token['metadata']) ? $token['metadata'] : null;
             $tokenModel->collection = array(
-                'name' => ($token['collection'] !== null) ? ( ($token['collection']['name'] !== null) ? $token['collection']['name'] : null ) : null,
-                'icon_url' => ($token['collection'] !== null) ? ( ($token['collection']['icon_url'] !== null) ? $token['collection']['icon_url'] : null ) : null,
+                'name' => isset($token['collection']) ? ( isset($token['collection']['name']) ? $token['collection']['name'] : null ) : null,
+                'icon_url' => isset($token['collection']) ? ( isset($token['collection']['icon_url']) ? $token['collection']['icon_url'] : null ) : null,
             );
-            $tokenModel->created_at = ($token['created_at'] !== null) ? strtotime($token['created_at'] ) : null;
-            $tokenModel->updated_at = ($token['updated_at'] !== null) ? strtotime($token['updated_at'] ) : null;
-
+            $tokenModel->created_at = isset($token['created_at']) ? strtotime($token['created_at'] ) : null;
+            $tokenModel->updated_at = isset($token['updated_at']) ? strtotime($token['updated_at'] ) : null;
             $tokenModel->save();
         }
+    }
+
+    public function storeAsCSV() {
+        $fileName = public_path() . '\storage\immuta-x-3600000.csv';
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        $columns = array('id', 'token_address', 'real_id', 'user', 'status', 'uri', 'name', 'description', 'image_url', 'metadata', 'collection', 'created_at', 'updated_at');
+
+        $token_address = "0xa7aefead2f25972d80516628417ac46b3f2604af";
+        
+        $i = 3600000;
+        $file = fopen($fileName, 'w');
+        
+        fputcsv($file, $columns);
+
+        $cnt = 0;
+        for ( ; $i <= 6000000 ; $i++) {
+            $token = $this->_getTokenDetail($token_address, $i);
+
+            $row = array(
+                $i,
+                isset($token['token_address']) ? $token['token_address'] : null,
+                isset($token['id']) ? $token['id'] : null,
+                isset($token['user']) ? $token['user'] : null,
+                isset($token['status']) ? $token['status'] : null,
+                isset($token['uri']) ? $token['uri'] : null,
+                isset($token['name']) ? $token['name'] : null,
+                isset($token['description']) ? $token['description'] : null,
+                isset($token['image_url']) ? $token['image_url'] : null,
+                isset($token['metadata']) ? implode(' ', $token['metadata']) : null,
+                json_encode(array(
+                            'name' => isset($token['collection']) ? ( isset($token['collection']['name']) ? $token['collection']['name'] : null ) : null,
+                            'icon_url' => isset($token['collection']) ? ( isset($token['collection']['icon_url']) ? $token['collection']['icon_url'] : null ) : null,
+                        )),
+                isset($token['created_at']) ? $token['created_at'] : null,
+                isset($token['updated_at']) ? $token['updated_at'] : null
+            );
+
+            fputcsv($file, $row);
+
+            echo $i . '<br />';
+            $cnt++;
+            if ($cnt == 5000) break;
+        }
+        fclose($file);
     }
 }
