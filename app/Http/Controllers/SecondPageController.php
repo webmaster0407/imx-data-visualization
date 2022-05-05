@@ -58,6 +58,7 @@ class SecondPageController extends Controller
             }
             if ($toCnt / $cnt < 0.5) {
                 $hodl_wallets[] = [
+                    'season' => $season_id,
                     'address' => $wallet,
                     'percent' => $toCnt / $cnt
                 ];
